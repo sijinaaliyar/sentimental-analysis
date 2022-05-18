@@ -1,0 +1,18 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+297        libname _hpdmDat "D:\Msc Data Science\CourseWorks\ASDM\Sentimental
+297      ! Analysis\Sentimental_Analysis_SAS\Workspaces\EMWS1\HPDM";
+NOTE: Libref _HPDMDAT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: D:\Msc Data Science\CourseWorks\ASDM\Sentimental 
+      Analysis\Sentimental_Analysis_SAS\Workspaces\EMWS1\HPDM
+298        libname _hpdmDat;
+2                                       The SAS System          11:19 Saturday, January 1, 2022
+
+NOTE: Libref _HPDMDAT has been deassigned.
+299        proc printto;
+300        run;
+

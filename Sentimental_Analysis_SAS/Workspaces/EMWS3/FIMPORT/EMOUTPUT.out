@@ -1,0 +1,89 @@
+*------------------------------------------------------------*
+User:                hp
+Date:                January 15, 2022
+Time:                21:16:29
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+ID            NOMINAL          1
+INPUT         NOMINAL          1
+REJECTED      NOMINAL          3
+TEXT          NOMINAL          1
+ 
+ 
+ 
+ 
+ 
+The CONTENTS Procedure
+ 
+Data Set Name        EMWS3.FIMPORT_DATA            Observations          4400
+Member Type          DATA                          Variables             6
+Engine               V9                            Indexes               0
+Created              01/15/2022 21:16:28           Observation Length    1224
+Last Modified        01/15/2022 21:16:28           Deleted Observations  0
+Protection                                         Compressed            NO
+Data Set Type                                      Sorted                NO
+Label
+Data Representation  WINDOWS_32
+Encoding             wlatin1  Western (Windows)
+ 
+ 
+                                                          Engine/Host Dependent Information
+ 
+Data Set Page Size          98304
+Number of Data Set Pages    56
+First Data Page             1
+Max Obs per Page            80
+Obs in First Data Page      78
+Number of Data Set Repairs  0
+ExtendObsCounter            YES
+Filename                    D:\Msc Data Science\CourseWorks\ASDM\Sentimental Analysis\Sentimental_Analysis_SAS\Workspaces\EMWS3\fimport_data.sas7bdat
+Release Created             9.0401M5
+Host Created                W32_10HOME
+Owner Name                  LAPTOP-7G2D9J4T\hp
+File Size                   5MB
+File Size (bytes)           5603328
+ 
+ 
+       Alphabetic List of Variables and Attributes
+ 
+#    Variable           Type    Len    Format    Informat
+ 
+1    VAR1               Char    174    $174.     $174.
+2    id                 Char    229    $229.     $229.
+4    location           Char     85    $85.      $85.
+5    restaurant_name    Char     35    $35.      $35.
+6    review             Char    595    $595.     $595.
+3    review_date        Char    106    $106.     $106.
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Exported Attributes for TRAIN Port
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+ID            NOMINAL          1
+INPUT         NOMINAL          1
+REJECTED      NOMINAL          3
+TEXT          NOMINAL          1

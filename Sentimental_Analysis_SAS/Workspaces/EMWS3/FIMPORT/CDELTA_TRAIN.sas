@@ -1,0 +1,16 @@
+if NAME="location" then do;
+ROLE="REJECTED";
+LEVEL="NOMINAL";
+ORDER="";
+end;
+if NAME="review_date" then do;
+ROLE="REJECTED";
+LEVEL="NOMINAL";
+ORDER="";
+end;
+if NAME="VAR1" then do;
+ROLE="REJECTED";
+LEVEL="NOMINAL";
+ORDER="";
+end;
+drop DROP;

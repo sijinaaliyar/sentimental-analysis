@@ -1,0 +1,391 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1 
+Traverser: Traverser invoked.  MPCONNECT command is sas. 
+Traverser: Beginning flow traversal 
+*------------------------------------------------------------* 
+* 
+* FIMPORT : Beginning Update 
+* datetime : 01JAN2022:15:47:44 
+* 
+*------------------------------------------------------------* 
+127467     %let emexceptionString =;
+127468     %let EMEXCEPTIONSTRING=;
+127469     *------------------------------------------------------------*;
+127470     * UPDATE: FIMPORT;
+127471     *------------------------------------------------------------*;
+127472     %let EM_ACTION = UPDATE;
+127473     %let syscc = 0;
+127474     /* Fimport.source */
+127475     %macro main;
+127476           %if %upcase(&EM_ACTION) = CREATE %then %do;
+127477              filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+127478              %include temp;
+127479              filename temp;
+127480              %create;
+127481           %end;
+127482           %else
+127483           %if %upcase(&EM_ACTION) = TRAIN %then %do;
+127484              filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+127485              %include temp;
+127486              filename temp;
+127487              %train;
+127488           %end;
+127489           %else
+127490           %if %upcase(&EM_ACTION) = UPDATE %then %do;
+127491              filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+127492              %include temp;
+127493              filename temp;
+127494              %update;
+127495           %end;
+127496           %else
+127497           %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+127498              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+127499              %include temp;
+127500              filename temp;
+127501              %property;
+127502           %end;
+127503            %else
+127504           %if %upcase(&EM_ACTION) = SCORE %then %do;
+127505              filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+127506              %include temp;
+127507              filename temp;
+127508              %score;
+127509           %end;
+127510           %else
+127511           %if %upcase(&EM_ACTION) = REPORT %then %do;
+127512              filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+127513              %include temp;
+127514              filename temp;
+127515              %report;
+127516           %end;
+127517           %else
+127518           %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+127519              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+127520              %include temp;
+127521              filename temp;
+127522              %openvariableset;
+127523           %end;
+127524           %else
+127525           %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+127526              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+127527              %include temp;
+127528              filename temp;
+127529              %closevariableset;
+127530           %end;
+127531     %mend main;
+127532     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
+127533    +%macro update;
+127534    +    %let oldrole = %str();
+127535    +    data _null_;
+127536    +       set &em_data_exportset;
+127537    +       where NODEPORT='TRAIN';
+127538    +       call symput('oldrole', ROLE);
+127539    +    run;
+127540    +    %if &oldrole ne &em_property_role %then %do;
+127541    +        data &em_data_exportset;
+127542    +           set &em_data_exportset;
+127543    +           if NODEPORT='TRAIN' then do;
+127544    +              ROLE="&em_property_role";
+127545    +              NEEDUPDATE='Y';
+127546    +              EXPORT='Y';
+127547    +           end;
+127548    +        run;
+127549    +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+127550    +        data _null_;
+127551    +           file x;
+127552    +           put ' ';
+127553    +        run;
+127554    +        filename x;
+127555    +    %end;
+127556    +    %else %do;
+127557    +        data &em_data_exportset;
+127558    +           set &em_data_exportset;
+127559    +           if NODEPORT='TRAIN' then do;
+127560    +              ROLE="&em_property_role";
+127561    +              NEEDUPDATE='Y';
+127562    +              EXPORT='Y';
+127563    +           end;
+127564    +        run;
+127565    +    %end;
+127566    +
+127567    +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+127568    +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+127569    +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+127570    +           set &em_user_emcmetadefault;
+127571    +           drop DROP;
+127572    +           where DROP='N';
+127573    +        run;
+127574    +    %end;
+127575    +
+127576    +%mend update;
+127577    +
+127578    +
+127579    +
+127580    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+
+NOTE: There were 1 observations read from the data set EMWS3.FIMPORT_EXPORTSET.
+      WHERE NODEPORT='TRAIN';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 6 observations read from the data set EMWS3.FIMPORT_EXPORTSET.
+NOTE: The data set EMWS3.FIMPORT_EXPORTSET has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+127581     *------------------------------------------------------------*;
+127582     * End UPDATE: FIMPORT;
+127583     *------------------------------------------------------------*;
+
+127584     %em_delMacro;
+
+127586     %let _HPDMGRIDHOST=;
+127587     %let _HPDMGRIDINSTALLLOC=;
+127588     %let _HPDMGRIDDATASERVER=;
+127589     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* FIMPORT : End Update 
+* datetime : 01JAN2022:15:47:44 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TEXTFILTER" 
+Traverser: WaitingNode "TEXTRULE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* TextParsing : Beginning Update 
+* datetime : 01JAN2022:15:47:45 
+* 
+*------------------------------------------------------------* 
+127838     %let emexceptionString =;
+127839     %let EMEXCEPTIONSTRING=;
+127840     *------------------------------------------------------------*;
+127841     * UPDATE: TextParsing;
+127842     *------------------------------------------------------------*;
+127843     %let EM_ACTION = UPDATE;
+127844     %let syscc = 0;
+127845     %macro main();
+127846       %if %upcase(&EM_ACTION) eq CREATE %then %do;
+127847         filename temp catalog 'sashelp.emtxtext.parse_create.source';
+127848         %include temp;
+127849         %create();
+127850       %end;
+127851       %if %upcase(&EM_ACTION) eq TRAIN %then %do;
+127852         filename temp catalog 'sashelp.emtxtext.parse_train.source';
+127853         %include temp;
+127854         %train();
+127855       %end;
+127856       %if %upcase(&EM_ACTION) eq REPORT %then %do;
+127857         filename temp catalog 'sashelp.emtxtext.parse_report.source';
+127858         %include temp;
+127859         %report();
+127860       %end;
+127861       %if %upcase(&EM_ACTION) eq SCORE %then %do;
+127862         filename temp catalog 'sashelp.emtxtext.parse_score.source';
+127863         %include temp;
+127864         %score();
+127865       %end;
+127866         %if %upcase(&EM_ACTION) eq OPENTABLE1 %then %do;
+127867            filename temp catalog 'sashelp.emtxtext.parse_actions.source';
+127868            %include temp;
+127869            filename temp;
+127870            %openTable1;
+127871        %end;
+127872     %mend main;
+127873     
+127874     %main();
+127875     *------------------------------------------------------------*;
+127876     * End UPDATE: TextParsing;
+127877     *------------------------------------------------------------*;
+127878     
+127879     
+127880     
+127881     
+
+127882     %em_delMacro;
+
+127884     %let _HPDMGRIDHOST=;
+127885     %let _HPDMGRIDINSTALLLOC=;
+127886     %let _HPDMGRIDDATASERVER=;
+127887     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* TextParsing : End Update 
+* datetime : 01JAN2022:15:47:45 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TEXTRULE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* TextFilter : Beginning Update 
+* datetime : 01JAN2022:15:47:45 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+128166     %let emexceptionString =;
+128167     %let EMEXCEPTIONSTRING=;
+128168     *------------------------------------------------------------*;
+128169     * UPDATE: TextFilter;
+128170     *------------------------------------------------------------*;
+128171     %let EM_ACTION = UPDATE;
+128172     %let syscc = 0;
+128173     %macro main();
+128174         %if %upcase("&EM_ACTION") eq "CREATE" %then %do;
+128175             filename temp catalog 'sashelp.emtxtext.filter_create.source';
+128176             %include temp;
+128177             %create();
+128178         %end;
+128179         %if %upcase("&EM_ACTION") eq "TRAIN" %then %do;
+128180             filename temp catalog 'sashelp.emtxtext.filter_train.source';
+128181             %include temp;
+128182             %train();
+128183         %end;
+128184         %if %upcase("&EM_ACTION") eq "SCORE" %then %do;
+128185             filename temp catalog 'sashelp.emtxtext.filter_score.source';
+128186             %include temp;
+128187             %score();
+128188         %end;
+128189         %if %upcase("&EM_ACTION") eq "REPORT" %then %do;
+128190             filename temp catalog 'sashelp.emtxtext.filter_report.source';
+128191             %include temp;
+128192            %report();
+128193         %end;
+128194          %if %upcase(&EM_ACTION) eq OPENTABLE1 %then %do;
+128195            filename temp catalog 'sashelp.emtxtext.filter_actions.source';
+128196            %include temp;
+128197            filename temp;
+128198            %openTable1;
+128199        %end;
+128200     %mend main;
+128201     
+128202     %main();
+128203     *------------------------------------------------------------*;
+128204     * End UPDATE: TextFilter;
+128205     *------------------------------------------------------------*;
+
+128206     %em_delMacro;
+
+128208     %let _HPDMGRIDHOST=;
+128209     %let _HPDMGRIDINSTALLLOC=;
+128210     %let _HPDMGRIDDATASERVER=;
+128211     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* TextFilter : End Update 
+* datetime : 01JAN2022:15:47:45 
+* 
+*------------------------------------------------------------* 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* TextRule : Beginning Update 
+* datetime : 01JAN2022:15:47:46 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+128615     data EM_TARGETDECINFO;
+128616     length TARGET $32 DECDATA DECMETA $43;
+128617     TARGET="restaurant_name";
+128618     DECDATA="EMWS3.TextRule_restaurant_name_DD";
+128619     DECMETA="EMWS3.TextRule_restaurant_name_DM";
+128620     output;
+128621     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+128622     %let emexceptionString =;
+128623     %let EMEXCEPTIONSTRING=;
+128624     *------------------------------------------------------------*;
+128625     * UPDATE: TextRule;
+128626     *------------------------------------------------------------*;
+128627     %let EM_ACTION = UPDATE;
+128628     %let syscc = 0;
+128629     %macro main();
+128630     
+128631        %if %upcase(&EM_ACTION) eq CREATE %then %do;
+128632           filename temp catalog 'sashelp.emtxtext.boolcat_create.source';
+128633           %include temp;
+128634           %create();
+128635        %end;
+128636        %if %upcase(&EM_ACTION) eq TRAIN %then %do;
+128637           filename temp catalog 'sashelp.emtxtext.boolcat_train.source';
+128638           %include temp;
+128639           %train();
+128640        %end;
+128641        %if %upcase(&EM_ACTION) eq REPORT %then %do;
+128642           filename temp catalog 'sashelp.emtxtext.boolcat_report.source';
+128643           %include temp;
+128644           %report();
+128645        %end;
+128646     
+128647       %mend main;
+128648     
+128649     %main();
+128650     *------------------------------------------------------------*;
+128651     * End UPDATE: TextRule;
+128652     *------------------------------------------------------------*;
+128653     
+128654     
+
+128655     %em_delMacro;
+
+128657     %let _HPDMGRIDHOST=;
+128658     %let _HPDMGRIDINSTALLLOC=;
+128659     %let _HPDMGRIDDATASERVER=;
+128660     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* TextRule : End Update 
+* datetime : 01JAN2022:15:47:46 
+* 
+*------------------------------------------------------------* 
+Traverser: Run Completed 
+128661     proc printto;
+128662     run;
+

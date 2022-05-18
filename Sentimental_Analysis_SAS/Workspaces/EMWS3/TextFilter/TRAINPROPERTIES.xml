@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  Location="CATALOG" Catalog="SASHELP.EMTXTEXT.FILTER.SOURCE" spellCheck="Y" spellSensitivity="Med"
+ cellWeight="DEFAULT" termWeight="DEFAULT" minDocs="6" maxTerms="." resultTerms="ALL"
+ maxviewTerms="20000" ForceRun="N" RunAction="Train" Component="TextFilter" spellDict="CWORK.ENGDICT"
+ searchPhrase="" searchVar="" whereDoc="(restaurant_name ? &quot;istanbul turkish restaurant&quot;)"
+ lastfilternode="" lastparsenode="" synonymImport="" saveSynDS="" spellDS="EMWS3.TextFilter_spellDS"
+ RawCreateTime="1956658414.1" CreateTime="01JAN2022:12:13:34" interStopDS="" interSynDS=""
+ filters="" RunId="31334acd-72f7-4524-a4c8-dc5d4a43f63d" termSortColumn="Term" termSortDirection="ASC"
+ RawLastTimeRun="1957975679.9" RawRunTime="2.9830000401" LastTimeRun="16JAN2022:18:08:00"
+ RunTime="0 Hr. 0 Min. 2.98 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES ><![CDATA[
+USERTRAINCODE
+USERSCORECODE
+USERREPORTCODE
+SYNONYMIMPORT
+]]>
+</FILEPROPERTIES></_ROOT_>
